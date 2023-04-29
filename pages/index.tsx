@@ -1,19 +1,35 @@
-import Head from "next/head";
-import { Inter } from "@next/font/google";
-import Nav from "@/components/Nav";
-import { useContext } from "react";
-import { ThemeContext } from "@/ThemeContext";
-import Main from "@/components/Main";
+import { useState } from 'react';
+import Head from 'next/head';
+import { Inter } from '@next/font/google';
+import Nav from '@/components/Nav';
+import { useContext } from 'react';
+import { ThemeContext } from '@/ThemeContext';
+import Main from '@/components/Main';
+import { Work } from '@/components/Work';
+import { Contact } from '@/components/Contact';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-
   const { theme, setTheme } = useContext(ThemeContext);
 
   const styles = {
-    mainStyle: {background: `linear-gradient(45deg, ${theme?.bgPrimary}, ${theme?.bgSecondary})`},
-  }
+    mainStyle: { background: `linear-gradient(45deg, ${theme?.bgPrimary}, ${theme?.bgSecondary})` },
+  };
+
+  const [activePage, setActivePage] = useState(0);
+  const pages = [<Work />, <Main />, <Contact />];
+
+  const handleNavClick = (index: number) => {
+    setActivePage(index);
+  };
+
+  const pageVariants = {
+    initial: { x: '100%' },
+    enter: { x: '0%', transition: { duration: 0.5 } },
+    exit: { x: '-100%', transition: { duration: 0.5 } },
+  };
 
   return (
     <>
@@ -23,9 +39,19 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={styles.mainStyle}>
-        <Nav />
-        <Main/>
+      <main className="h-screen" style={styles.mainStyle}>
+        <Nav onNavClick={handleNavClick} />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activePage}
+            variants={pageVariants}
+            initial="initial"
+            animate="enter"
+            exit="exit"
+          >
+            {pages[activePage]}
+          </motion.div>
+        </AnimatePresence>
       </main>
     </>
   );

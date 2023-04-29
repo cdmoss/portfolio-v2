@@ -33,42 +33,44 @@ const Main = () => {
 
 
   return (
-    <div className='flex'>
+    <div className='flex h-full mx-auto'>
       {/* Left half with bullet points */}
+      <div className="flex-1 h-full flex flex-col justify-center space-y-20">
+        {bulletPoints.map((point, index) => (
+          <motion.div
+            key={index}
+            custom={index}
+            variants={bulletVariants}
+            initial="hidden"
+            animate="visible"
+            className='text-lg font-semibold pl-48'
+          >
+            <span>{">"}</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            {point}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Middle section */}
       <div className="flex-1">
-        <ul>
-          {bulletPoints.map((point, index) => (
-            <motion.li
-              key={index}
-              custom={index}
-              variants={bulletVariants}
-              initial="hidden"
-              animate="visible"
-              className='text-white'
-            >
-              {point}
-            </motion.li>
-          ))}
-        </ul>
+        {/* Content for the middle section goes here */}
       </div>
 
       {/* Right half with image */}
       <motion.div
-        className="flex-1"
+        className="flex flex-1 justify-center items-center"
         variants={imageVariants}
         initial="hidden"
         animate="visible"
       >
-        <div>
-          Hello
-        </div>
-        {/* <Image
-          src="https://via.placeholder.com/300" // Replace with your image URL
+        <Image
+          src="/person.png" // Replace with your image URL
           alt="Large"
-          className="w-full h-auto"
-          width={100}
-          height={100}
-        /> */}
+          className="h-auto"
+          width={200}
+          height={200}
+        />
       </motion.div>
     </div>
   );
