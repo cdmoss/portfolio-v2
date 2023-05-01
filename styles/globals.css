@@ -4,9 +4,9 @@
 
 html, body {
     height: 100%;
-    overflow: hidden;
 }
 
-body {
+div {
+    overflow-anchor: none;
     margin: 0px 0px 0px 0px;
 }
