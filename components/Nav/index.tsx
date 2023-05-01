@@ -1,7 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { ThemeContext } from '@/ThemeContext';
+import { NAV_ITEMS, NavItem } from '@/pages';
+import { useState, useRef, useEffect, useContext } from 'react';
 
 interface NavProps {
-  onNavClick: (index: number) => void
+  activePage: NavItem
+  setActivePage: (index: NavItem) => void 
 }
 
 interface ItemPosition {
@@ -9,13 +12,20 @@ interface ItemPosition {
   width: number;
 }
 
-const Nav: React.FC<NavProps> = ({onNavClick}) => {
-  const [selected, setSelected] = useState(0);
+const pageIndex = (item: NavItem) => NAV_ITEMS.indexOf(item) 
+
+const navNames: Record<NavItem, string> = {
+  'work': "Work",
+  'name': "CM",
+  "contact": "Contact"
+}
+
+const Nav: React.FC<NavProps> = ({activePage, setActivePage}) => {
   const [navReady, setNavReady] = useState(false);
   const [itemPositions, setItemPositions] = useState<ItemPosition[]>([]);
   const navRef = useRef<HTMLUListElement | null>(null);
 
-  const navItems = ['Work', 'Chase Mossing', 'Contact'];
+  const {theme} = useContext(ThemeContext)
 
   useEffect(() => {
     if (navRef.current) {
@@ -32,35 +42,33 @@ const Nav: React.FC<NavProps> = ({onNavClick}) => {
     }
   }, [navReady]);
 
-  const handleNavClick = (index: number) => {
-    setSelected(index)
-    onNavClick(index)
-  }
-
   return (
-    <nav className="sticky top-0 z-10 py-4 bg-white">
-      <div className="container mx-auto">
+    <nav className="sticky top-0 z-10 h-[10%]" style={{borderBottom: `2px solid ${theme?.secondary}`}}>
+      <div className='flex h-full items-center justify-center'>
         <ul className="flex flex-row justify-center items-center relative" ref={navRef}>
-           {navItems.map((item, index) => (
-            <li key={index} className="mx-8 mb-1">
+           {NAV_ITEMS.map((item, index) => (
+            <li key={index} className="mx-8 mb-3">
               <button
+                style={{color: activePage == item ? theme?.secondary : theme?.accent, transition: "color .2s linear 0s"}}
                 className="text-lg font-semibold tracking-wider focus:outline-none"
-                onClick={() => handleNavClick(index)}
+                onClick={() => setActivePage(item)}
               >
-                {item}
+                {navNames[item]}
               </button>
             </li>
           ))}
           <li
-            className="absolute left-0 bottom-0 h-1 bg-black transition-all duration-300"
+            className="absolute left-0 bottom-0 h-1 transition-all duration-300"
             style={{
-              width: itemPositions[selected]?.width,
+              backgroundColor: theme?.secondary,
+              width: itemPositions[pageIndex(activePage)]?.width,
               transform:
-                itemPositions.length > 0 ? `translateX(${itemPositions[selected]?.left}px)` : 'translateX(0)',
+                itemPositions.length > 0 ? `translateX(${itemPositions[pageIndex(activePage)]?.left}px)` : 'translateX(0)',
             }}
           ></li>
         </ul>
       </div>
+      
     </nav>
   );
 };

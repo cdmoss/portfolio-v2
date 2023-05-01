@@ -5,9 +5,9 @@ interface Props {
 }
 
 interface Theme {
-  bgPrimary: string;
-  bgSecondary: string;
-  tertiaryColor: string;
+  primary: string;
+  secondary: string;
+  accent: string;
 }
 
 interface ThemeContextProps {
@@ -20,9 +20,9 @@ export type ThemeName = "cyber";
 
 const themes: Record<ThemeName, Theme> = {
   cyber: {
-    bgPrimary: "#05242F",
-    bgSecondary: "#1F2A67",
-    tertiaryColor: "#8AE06A",
+    primary: "#29244e",
+    secondary: "#7effdf",
+    accent: "#EFE9F4",
   },
 };
 
