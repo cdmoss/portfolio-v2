@@ -27,27 +27,12 @@ export default function Home() {
   };
   
   const [activePage, setActivePage] = useState<NavItem>('name');
-  const [mounted, setMounted] = useState<boolean>(false);
-  const [renderHist, setRenderHist] = useState<Record<NavItem, boolean>>({
-    'work': false,
-    'name': false,
-    'contact': false
-  });
   
   const prevActivePage = useRef<NavItem>('name')
-  const pages = {'work': <Work />, 'name': <Main hasRenderedBefore={renderHist.name} />, 'contact': <Contact />};
+  const pages = {'work': <Work />, 'name': <Main/>, 'contact': <Contact />};
 
   useEffect(() => {
-    let newRenderHist = Object.assign({}, renderHist)
     prevActivePage.current = activePage
-
-    if (!mounted) {
-      setMounted(true)
-    }
-    else {
-      newRenderHist[activePage] = true;
-      setRenderHist(newRenderHist)
-    }
   }, [activePage])
 
   const pageVariants: Record<NavItem, Variants | {}> = {

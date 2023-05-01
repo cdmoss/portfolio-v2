@@ -49,8 +49,11 @@ const Nav: React.FC<NavProps> = ({activePage, setActivePage}) => {
            {NAV_ITEMS.map((item, index) => (
             <li key={index} className="mx-8 mb-3">
               <button
-                style={{color: activePage == item ? theme?.secondary : theme?.accent, transition: "color .2s linear 0s"}}
-                className="text-lg font-semibold tracking-wider focus:outline-none"
+                style={{
+                  color: activePage == item ? theme?.secondary : theme?.accent, 
+                  transition: "color .2s linear 0s"
+                }}
+                className="text-2xl font-semibold tracking-wider focus:outline-none"
                 onClick={() => setActivePage(item)}
               >
                 {navNames[item]}
