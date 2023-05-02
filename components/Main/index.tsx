@@ -14,7 +14,7 @@ interface Coordinate {
 
 const DELAY_STEP = 0.25;
 
-const PICTURE_SIZE = 500;
+const PICTURE_SIZE = 400;
 
 const Main: React.FC = () => {
   const { theme } = useContext(ThemeContext);

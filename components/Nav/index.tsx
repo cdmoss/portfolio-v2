@@ -64,7 +64,7 @@ const Nav: React.FC<NavProps> = ({
                   color: activePage == item ? theme?.secondary : theme?.accent,
                   transition: "color .2s linear 0s",
                 }}
-                className="text-2xl font-semibold tracking-wider focus:outline-none"
+                className="text-2xl tracking-wider focus:outline-none"
                 onClick={() => setActivePage(item)}
               >
                 {item}
