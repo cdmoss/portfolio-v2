@@ -224,12 +224,7 @@ const ProjectListItem: React.FC<ProjectButtonProps> = ({
   );
 };
 
-interface WorkProps {
-  workHover: boolean;
-  setWorkHover: (workHover: boolean) => void;
-}
-
-export const Work: React.FC<WorkProps> = ({ workHover, setWorkHover }) => {
+export const Work: React.FC = () => {
   const { theme } = useContext(ThemeContext);
 
   const [selectedProject, setSelectedProject] = useState(projects[0]);

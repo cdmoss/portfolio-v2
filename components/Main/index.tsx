@@ -92,7 +92,7 @@ const Main: React.FC = () => {
           <div className="flex h-full flex-col">
             <div
               style={{ color: theme?.secondary }}
-              className="2xl:text-6xl lg:text-4xl text-3xl pb-10"
+              className="2xl:text-6xl lg:text-4xl text-3xl pb-12"
             >
               <span style={{ color: theme?.accent }}>{"Hi, I'm "}</span>
               <span style={{ color: theme?.secondary }}>{"Chase Mossing"}</span>
