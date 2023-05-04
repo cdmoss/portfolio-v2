@@ -50,7 +50,10 @@ const Nav: React.FC<NavProps> = ({
   return (
     <nav
       className="sticky top-0 z-10 h-[10%]"
-      style={{ borderBottom: `2px solid ${theme?.secondary}` }}
+      style={{
+        borderBottom: `2px solid ${theme?.secondary}`,
+        boxShadow: `0px 0px 5px ${theme?.secondary}`,
+      }}
     >
       <div className="flex h-full items-center justify-center">
         <ul

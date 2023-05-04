@@ -20,7 +20,7 @@ export type ThemeName = "cyber";
 
 const themes: Record<ThemeName, Theme> = {
   cyber: {
-    primary: "#29244e",
+    primary: "#031926",
     secondary: "#7effdf",
     accent: "#EFE9F4",
   },

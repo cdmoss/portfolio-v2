@@ -1,124 +1,35 @@
 import { ThemeContext } from "@/ThemeContext";
-import { motion } from "framer-motion";
+import { logos } from "@/utils";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useRef, useState } from "react";
+import {
+  FaChevronLeft,
+  FaChevronRight,
+  FaCode,
+  FaExpand,
+} from "react-icons/fa";
+import { IoMdOpen, IoMdShare } from "react-icons/io";
+import { Project, projects } from "./projects";
+import { useScreenSize } from "@/hooks/useScreenSize";
 
-interface Project {
-  idx: number;
-  name: string;
-  link: string;
-  description: string;
-  screenshots: string[];
-  logos: string[];
-}
+const EXPAND_BTN_SIZE = 30;
 
 interface ProjectInfoProps {
   project: Project;
+  exitDirection: number;
 }
-
-// Assuming your projects are stored in an array of objects
-const projects: Project[] = [
-  {
-    idx: 0,
-    name: "click & push",
-    link: "",
-    description:
-      "Click & Push is a company with the mission to make public spaces more accessible. I performed full-stack development for them, working with react native and django to build their main product, the Atlas - a mapping app that displays community sourced accessibility information of many kinds.",
-    screenshots: [],
-    logos: [
-      "/logos/react.png",
-      "/logos/django.png",
-      "/logos/nginx.png",
-      "/logos/docker1.png",
-      "/logos/digitalocean.png",
-    ],
-  },
-  {
-    idx: 1,
-    name: "YARO",
-    link: "",
-    description: "yaro description",
-    screenshots: [],
-    logos: [
-      "/logos/react.png",
-      "/logos/django.png",
-      "/logos/nginx.png",
-      "/logos/docker1.png",
-      "/logos/unreal.png",
-      "/logos/java1.png",
-      "/logos/objc.png",
-      "/logos/azure.png",
-    ],
-  },
-  {
-    idx: 2,
-    name: "elixr",
-    link: "",
-    description: "elixr description",
-    screenshots: [],
-    logos: [
-      "/logos/dotnet.png",
-      "/logos/csharp.png",
-      "/logos/html.webp",
-      "/logos/css1.png",
-      "/logos/js.png",
-    ],
-  },
-  {
-    idx: 3,
-    name: "TRAD data monitor",
-    link: "https://github.com/cdmoss/TradDataMonitor-v2",
-    description: "TRAD description",
-    screenshots: [],
-    logos: ["/logos/avalonia.ico", "/logos/dotnet.png", "/logos/csharp.png"],
-  },
-  {
-    idx: 4,
-    name: "HR manager",
-    link: "",
-    description: "hr description",
-    screenshots: [],
-    logos: ["/logos/blazor.png", "/logos/dotnet.png", "/logos/csharp.png"],
-  },
-  {
-    idx: 5,
-    name: "bitcoin info site",
-    link: "https://bitcoin-info.netlify.app",
-    description: "btc description",
-    screenshots: [],
-    logos: ["/logos/html.webp", "/logos/css1.png", "/logos/js.png"],
-  },
-  {
-    idx: 6,
-    name: "minimalist website design",
-    link: "https://www.figma.com/proto/glTvMyovhqOCohLZM0mZW8/3520AssignmentOne?scaling=scale-down&page-id=0%3A1&node-id=1-23&starting-point-node-id=1%3A5",
-    description: "minimalist description",
-    screenshots: [],
-    logos: ["/logos/figma.png"],
-  },
-  {
-    idx: 7,
-    name: "business manager",
-    link: "",
-    description: "business description",
-    screenshots: [],
-    logos: ["/logos/php.webp", "/logos/mysql.png", "/logos/apache.png"],
-  },
-  {
-    idx: 7,
-    name: "logic simulator",
-    link: "https://basic-logic-sim.netlify.app",
-    description: "business description",
-    screenshots: [],
-    logos: ["/logos/html.webp", "/logos/css1.png", "/logos/js.png"],
-  },
-];
 
 const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
   const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
-  const [hoveringButton, setHoveringButton] = useState(false);
+  const [linkHover, setLinkHover] = useState(false);
+  const [gitHover, setGitHover] = useState(false);
+  const [rightHover, setRightHover] = useState(false);
+  const [leftHover, setLeftHover] = useState(false);
+  const [photoHover, setPhotoHover] = useState(false);
   const { theme } = useContext(ThemeContext);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
   console.log(project);
 
@@ -132,128 +43,243 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
 
   return (
     <motion.div
-      className="h-full flex-1 flex flex-col gap-5 justify-start"
-      initial={{ x: "50%", opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ delay: 0.2 }}
+      className="h-full flex-1 flex flex-col gap-5 justify-start relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <p className="text-xl">{project.description}</p>
-      {project.screenshots.length > 0 && (
-        <div>
-          <button onClick={() => changeScreenshot(-1)}>Previous</button>
-          <Image
-            src={project.screenshots[currentScreenshotIndex]}
-            alt="Screenshot"
-            width={100}
-            height={100}
-          />
-          <button onClick={() => changeScreenshot(1)}>Next</button>
+      <div className="flex gap-10 justify-even items-center h-full">
+        <div className="flex flex-1 flex-col gap-5">
+          <div className="2xl:text-lg xl:text-md ">{project.description}</div>
+          <hr className="py-3" />
+          {project.logos.length > 0 && (
+            <div className="flex flex-1 gap-3 flex-wrap justify-center">
+              {project.logos.map((logo) => (
+                <div
+                  key={logo}
+                  style={{}}
+                  className="2xl:h-14 2xl:w-14 lg:h-10 lg:w-10 relative"
+                >
+                  <Image
+                    src={logo}
+                    alt="logo"
+                    fill={true}
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-      {project.logos.length > 0 && (
-        <div>
-          <hr />
-          <div className="text-xl my-2">Tools used:</div>
-          <div className="flex flex-1 justify-start gap-3">
-            {project.logos.map((logo) => (
-              <Image
-                key={logo}
-                src={logo}
-                alt="logo"
-                width={50}
-                height={50}
-                style={{ objectFit: "contain" }}
-              />
-            ))}
+        {project.screenshots.length > 0 && (
+          <div className="h-full flex flex-1 flex-col gap-3 justify-center items-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScreenshotIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="h-full relative w-full p-2 transition-all"
+              >
+                <Image
+                  onMouseEnter={() => setPhotoHover(true)}
+                  onMouseLeave={() => setPhotoHover(false)}
+                  ref={imageRef}
+                  key={currentScreenshotIndex}
+                  style={{
+                    objectFit: "contain",
+                    opacity: photoHover ? 0.3 : 1,
+                  }}
+                  src={project.screenshots[currentScreenshotIndex]}
+                  fill={true}
+                  alt="Screenshot"
+                  className="transition-all cursor-pointer"
+                />
+                {imageRef.current && photoHover && (
+                  <motion.div
+                    key={currentScreenshotIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <FaExpand
+                      onMouseEnter={() => setPhotoHover(true)}
+                      onMouseLeave={() => setPhotoHover(false)}
+                      size={EXPAND_BTN_SIZE}
+                      color={theme?.secondary}
+                      className="absolute z-10 cursor-pointer"
+                      style={{
+                        top: (imageRef.current.height - EXPAND_BTN_SIZE) / 2,
+                        left: (imageRef.current.width - EXPAND_BTN_SIZE) / 2,
+                      }}
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+            {project.screenshots?.length > 1 && (
+              <div className="flex gap-5">
+                <FaChevronLeft
+                  onMouseEnter={() => setLeftHover(true)}
+                  onMouseLeave={() => setLeftHover(false)}
+                  style={{
+                    color: leftHover ? theme?.secondary : theme?.accent,
+                  }}
+                  size={25}
+                  className="cursor-pointer"
+                  onClick={() => changeScreenshot(-1)}
+                />
+                <FaChevronRight
+                  onMouseEnter={() => setRightHover(true)}
+                  onMouseLeave={() => setRightHover(false)}
+                  style={{
+                    color: rightHover ? theme?.secondary : theme?.accent,
+                  }}
+                  size={25}
+                  className="cursor-pointer"
+                  onClick={() => changeScreenshot(1)}
+                />
+              </div>
+            )}
           </div>
-        </div>
-      )}
-      {project.link && (
-        <div className="flex-1 mt-2">
-          <a
-            target="_blank"
-            href={project.link}
-            onMouseEnter={() => setHoveringButton(true)}
-            onMouseLeave={() => setHoveringButton(false)}
-            style={{
-              border: `solid 1px ${theme?.secondary}`,
-              color: hoveringButton ? theme?.primary : theme?.secondary,
-              backgroundColor: hoveringButton
-                ? theme?.secondary
-                : theme?.primary,
-            }}
-            className="text-xl p-3 rounded-md transition-all"
-          >
-            Check it out
-          </a>
+        )}
+      </div>
+      {(project.github || project.link) && (
+        <div className="flex gap-3 justify-end absolute top-0 right-0">
+          {project.github && (
+            <a
+              target="_blank"
+              href={project.github}
+              onMouseEnter={() => setGitHover(true)}
+              onMouseLeave={() => setGitHover(false)}
+              style={{ color: gitHover ? theme?.secondary : theme?.accent }}
+              className="transition-all"
+            >
+              <FaCode size={25} />
+            </a>
+          )}
+          {project.link && (
+            <a
+              target="_blank"
+              href={project.link}
+              onMouseEnter={() => setLinkHover(true)}
+              onMouseLeave={() => setLinkHover(false)}
+              style={{
+                color: linkHover ? theme?.secondary : theme?.accent,
+              }}
+              className="transition-all"
+            >
+              <IoMdOpen size={25} />
+            </a>
+          )}
         </div>
       )}
     </motion.div>
   );
-  //   <div className="flex-1 bg-white">
-  //     <p className="text-xl">{project.description}</p>
-  //     {project.screenshots.length > 0 && (
-  //       <div>
-  //         <button onClick={() => changeScreenshot(-1)}>Previous</button>
-  //         <Image
-  //           src={project.screenshots[currentScreenshotIndex]}
-  //           alt="Screenshot"
-  //           width={200}
-  //           height={200}
-  //         />
-  //         <button onClick={() => changeScreenshot(1)}>Next</button>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 };
 
-export const Work: React.FC = () => {
+interface ProjectButtonProps {
+  project: Project;
+  selectedProjectIdx: number;
+  setSelectedProject: (project: Project) => void;
+}
+
+const ProjectListItem: React.FC<ProjectButtonProps> = ({
+  project,
+  selectedProjectIdx,
+  setSelectedProject,
+}) => {
+  const { theme } = useContext(ThemeContext);
+  const [onHover, setHover] = useState(false);
+
+  return (
+    <li
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      className="relative my-2 rounded-sm"
+      onClick={() => setSelectedProject(project)}
+      style={{
+        border:
+          onHover || project.idx == selectedProjectIdx
+            ? `solid 1px ${theme?.secondary}`
+            : `solid 1px ${theme?.primary}`,
+        backgroundColor:
+          project.idx == selectedProjectIdx ? theme?.secondary : theme?.primary,
+        transition: "background-color 0.2s linear 0s, border 0.2s linear 0s",
+      }}
+    >
+      <button
+        style={{
+          color:
+            project.idx == selectedProjectIdx
+              ? theme?.primary
+              : theme?.secondary,
+        }}
+        className="p-2 w-full text-left 2xl:text-xl xl:text-lg lg:text-base"
+      >
+        {project.name}
+      </button>
+      <button></button>
+    </li>
+  );
+};
+
+interface WorkProps {
+  workHover: boolean;
+  setWorkHover: (workHover: boolean) => void;
+}
+
+export const Work: React.FC<WorkProps> = ({ workHover, setWorkHover }) => {
   const { theme } = useContext(ThemeContext);
 
   const [selectedProject, setSelectedProject] = useState(projects[0]);
   const ulRef = useRef<HTMLUListElement | null>(null);
 
+  const [lastProjectIndex, setLastProjectIndex] = useState(0);
+  const exitDirection = selectedProject.idx < lastProjectIndex ? 1 : -1;
+
+  const [sectionHover, setSectionHover] = useState(false);
+
   return (
     <div className="flex flex-col h-full">
-      <div className="h-[25%]"></div>
       <div
-        className="justify-start items-center w-[50%] mx-auto "
-        style={{ color: theme?.accent, display: "flex", flexDirection: "row" }}
+        onMouseEnter={() => setSectionHover(true)}
+        onMouseLeave={() => setSectionHover(false)}
+        className="transition-all justify-start items-center 2xl:w-[75%] 2xl:h-[75%] xl:w-[90%] xl-[90%] m-auto p-10 rounded-md"
+        style={{
+          color: theme?.accent,
+          display: "flex",
+          flexDirection: "row",
+          border: `solid 1px ${theme?.secondary}`,
+          boxShadow: sectionHover ? `0px 0px 10px ${theme?.secondary}` : "",
+        }}
       >
         <ul
-          className="text-xl mr-20 pr-5"
-          style={{ borderRight: `solid 2px ${theme?.secondary}` }}
+          className="text-xl mr-20 pr-5 h-full"
+          style={{
+            borderRight: `solid 2px ${theme?.secondary}`,
+          }}
           ref={ulRef}
         >
           {projects.map((project) => (
-            <li
-              className="relative my-2 rounded-sm"
-              key={project.name}
-              onClick={() => setSelectedProject(project)}
-              style={{
-                backgroundColor:
-                  project == selectedProject
-                    ? theme?.secondary
-                    : theme?.primary,
-                transition: "background-color 0.2s linear 0s",
+            <ProjectListItem
+              key={project.idx}
+              project={project}
+              selectedProjectIdx={selectedProject.idx}
+              setSelectedProject={(project) => {
+                setLastProjectIndex(selectedProject.idx);
+                setSelectedProject(project);
               }}
-            >
-              <button
-                style={{
-                  color:
-                    project == selectedProject
-                      ? theme?.primary
-                      : theme?.secondary,
-                }}
-                className="p-2 w-full text-left"
-              >
-                {project.name}
-              </button>
-            </li>
+            />
           ))}
         </ul>
-        <ProjectInfo project={selectedProject} />
+        <AnimatePresence mode="wait">
+          <ProjectInfo
+            key={selectedProject.idx}
+            project={selectedProject}
+            exitDirection={exitDirection}
+          />
+        </AnimatePresence>
       </div>
     </div>
   );

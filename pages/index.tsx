@@ -1,12 +1,4 @@
-import {
-  WheelEvent,
-  WheelEventHandler,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { WheelEvent, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import Nav from "@/components/Nav";

@@ -14,12 +14,12 @@ interface Coordinate {
 
 const DELAY_STEP = 0.25;
 
-const PICTURE_SIZE = 400;
-
 const Main: React.FC = () => {
   const { theme } = useContext(ThemeContext);
   const ulRef = useRef<HTMLUListElement | null>(null);
   const picRef = useRef<HTMLImageElement | null>(null);
+  const { width } = useScreenSize();
+  const pictureSize = width && width > 1535 ? 400 : 300;
 
   // Define the bullet points
   const bulletPoints = [
@@ -66,22 +66,50 @@ const Main: React.FC = () => {
 
   return (
     <div className="h-full w-full relative">
-      <div className="flex h-full w-5/6 mx-auto">
+      <div className="flex max-lg:flex-col h-full w-[85%] mx-auto lg:gap-16 2xl:gap-52 ">
+        <motion.div
+          variants={imageVariants}
+          initial="hidden"
+          animate="visible"
+          className={`${styles.hexagon} flex justify-center items-center h-full lg:mt-20 self-center`}
+          style={{
+            height: pictureSize + 25,
+            width: pictureSize + 25,
+            backgroundColor: theme?.secondary,
+          }}
+        >
+          <Image
+            src="/person.png" // Replace with your image URL
+            alt="Large"
+            ref={picRef}
+            className={styles.hexagon}
+            width={pictureSize}
+            height={pictureSize}
+          />
+        </motion.div>
         {/* Left half with bullet points */}
-        <div className="flex-1 h-full flex flex-col items-center">
+        <div className="flex-1 h-full flex flex-col items-center 2xl:pt-52 lg:pt-36">
           <div className="flex h-full flex-col">
-            <div className="h-[25%]"></div>
-            <div style={{ color: theme?.secondary }} className="text-6xl pb-10">
+            <div
+              style={{ color: theme?.secondary }}
+              className="2xl:text-6xl lg:text-4xl text-3xl pb-10"
+            >
               <span style={{ color: theme?.accent }}>{"Hi, I'm "}</span>
               <span style={{ color: theme?.secondary }}>{"Chase Mossing"}</span>
             </div>
-            <p className="text-2xl mb-3" style={{ color: theme?.accent }}>
+            <p
+              className="2xl:text-2xl lg:text-lg mb-3"
+              style={{ color: theme?.accent }}
+            >
               {
                 "I'm a driven full-stack developer looking for opportunities to grow my skillset and build excellent software."
               }
             </p>
             <hr className="my-5" />
-            <p className="text-2xl mb-2" style={{ color: theme?.secondary }}>
+            <p
+              className="2xl:text-3xl lg:text-xl mb-2"
+              style={{ color: theme?.secondary }}
+            >
               {"Highlights:"}
             </p>
             <ul ref={ulRef}>
@@ -99,7 +127,10 @@ const Main: React.FC = () => {
                       style={{ color: theme?.secondary }}
                       className="mr-5 mt-2"
                     />
-                    <span className="text-xl" style={{ color: theme?.accent }}>
+                    <span
+                      className="2xl:text-2xl lg:text-lg"
+                      style={{ color: theme?.accent }}
+                    >
                       {point}
                     </span>
                   </motion.div>
@@ -108,44 +139,7 @@ const Main: React.FC = () => {
             </ul>
           </div>
         </div>
-
-        <motion.div
-          variants={imageVariants}
-          initial="hidden"
-          animate="visible"
-          className={`${styles.hexagon} flex justify-center items-center h-full`}
-          style={{
-            height: PICTURE_SIZE + 25,
-            width: PICTURE_SIZE + 25,
-            backgroundColor: theme?.secondary,
-          }}
-        >
-          <Image
-            src="/person.png" // Replace with your image URL
-            alt="Large"
-            ref={picRef}
-            className={styles.hexagon}
-            width={PICTURE_SIZE}
-            height={PICTURE_SIZE}
-          />
-        </motion.div>
       </div>
-      {/* {(width && height) && 
-      <motion.svg 
-        className="absolute top-0 left-0" 
-        width="100%" 
-        height="100%" 
-        viewBox={`0 0 100 100`} 
-        initial="hidden" 
-        animate="visible">
-        <motion.path
-          d={`M0 15 L0 5 L10 5`}
-          stroke="#00cc88"
-          strokeLinejoin={'round'}
-          strokeLinecap={'butt'}
-          variants={draw}
-          custom={2}/>
-      </motion.svg>} */}
     </div>
   );
 };
