@@ -1,24 +1,22 @@
-import { ThemeContext } from "@/ThemeContext";
-import { logos } from "@/utils";
+import { useTheme } from "@/ThemeContext";
+import { useScreenSize } from "@/hooks/useScreenSize";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
+  FaChevronDown,
   FaChevronLeft,
   FaChevronRight,
+  FaChevronUp,
   FaCode,
-  FaExpand,
 } from "react-icons/fa";
-import { IoMdOpen, IoMdShare } from "react-icons/io";
+import { IoMdOpen } from "react-icons/io";
 import { Project, projects } from "./projects";
-import { useScreenSize } from "@/hooks/useScreenSize";
 
 const EXPAND_BTN_SIZE = 30;
 
 interface ProjectInfoProps {
   project: Project;
-  exitDirection: number;
 }
 
 const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
@@ -28,7 +26,8 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
   const [rightHover, setRightHover] = useState(false);
   const [leftHover, setLeftHover] = useState(false);
   const [photoHover, setPhotoHover] = useState(false);
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
+  const { width } = useScreenSize();
   const imageRef = useRef<HTMLImageElement | null>(null);
 
   console.log(project);
@@ -43,22 +42,56 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
 
   return (
     <motion.div
-      className="h-full flex-1 flex flex-col gap-5 justify-start relative"
+      className="h-full flex-1 flex gap-5 justify-start max-lg:flex-col relative max-lg:mb-16 lg:pl-20"
+      style={{
+        borderLeft:
+          width && width > 1024 ? `solid 2px ${theme?.secondary}` : "",
+      }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="flex gap-10 justify-even items-center h-full">
-        <div className="flex flex-1 flex-col gap-5">
-          <div className="2xl:text-lg xl:text-md ">{project.description}</div>
-          <hr className="py-3" />
+      <div className="flex max-lg:flex-col gap-10 justify-even items-center lg:h-full w-full">
+        <div className="flex flex-1 flex-col max-w-[50%] m-auto">
+          <div className="2xl:text-lg xl:text-md">{project.description}</div>
+          {(project.github || project.link) && (
+            <div className="flex gap-3 justify-end">
+              {project.github && (
+                <a
+                  target="_blank"
+                  href={project.github}
+                  onMouseEnter={() => setGitHover(true)}
+                  onMouseLeave={() => setGitHover(false)}
+                  style={{ color: gitHover ? theme?.secondary : theme?.accent }}
+                  className="transition-all"
+                >
+                  <FaCode size={25} />
+                </a>
+              )}
+              {project.link && (
+                <a
+                  target="_blank"
+                  href={project.link}
+                  onMouseEnter={() => setLinkHover(true)}
+                  onMouseLeave={() => setLinkHover(false)}
+                  style={{
+                    color: linkHover ? theme?.secondary : theme?.accent,
+                  }}
+                  className="transition-all"
+                >
+                  <IoMdOpen size={25} />
+                </a>
+              )}
+            </div>
+          )}
+          <hr className="py-3 mt-5" />
           {project.logos.length > 0 && (
-            <div className="flex flex-1 gap-3 flex-wrap justify-center">
+            <div className="flex lg:flex-1 gap-3 flex-wrap justify-center">
               {project.logos.map((logo) => (
                 <div
                   key={logo}
                   style={{}}
-                  className="2xl:h-14 2xl:w-14 lg:h-10 lg:w-10 relative"
+                  className="2xl:h-14 2xl:w-14 h-10 w-10 relative"
                 >
                   <Image
                     src={logo}
@@ -72,14 +105,16 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
           )}
         </div>
         {project.screenshots.length > 0 && (
-          <div className="h-full flex flex-1 flex-col gap-3 justify-center items-center">
+          <div className="h-full w-full flex lg:flex-1 flex-col gap-3 justify-center items-center max-lg:hidden">
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.a
+                href={project.screenshots[currentScreenshotIndex]}
+                target="_blank"
                 key={currentScreenshotIndex}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-full relative w-full p-2 transition-all"
+                className="h-full relative w-full p-2"
               >
                 <Image
                   onMouseEnter={() => setPhotoHover(true)}
@@ -93,16 +128,16 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
                   src={project.screenshots[currentScreenshotIndex]}
                   fill={true}
                   alt="Screenshot"
-                  className="transition-all cursor-pointer"
+                  className="cursor-pointer transition-opacity"
                 />
-                {imageRef.current && photoHover && (
-                  <motion.div
+                {imageRef.current && (
+                  <div
                     key={currentScreenshotIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    style={{ opacity: imageRef.current && photoHover ? 1 : 0 }}
+                    className="transition-opacity"
                   >
-                    <FaExpand
+                    {/* TODO: enable photo expansion */}
+                    <IoMdOpen
                       onMouseEnter={() => setPhotoHover(true)}
                       onMouseLeave={() => setPhotoHover(false)}
                       size={EXPAND_BTN_SIZE}
@@ -113,12 +148,12 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
                         left: (imageRef.current.width - EXPAND_BTN_SIZE) / 2,
                       }}
                     />
-                  </motion.div>
+                  </div>
                 )}
-              </motion.div>
+              </motion.a>
             </AnimatePresence>
             {project.screenshots?.length > 1 && (
-              <div className="flex gap-5">
+              <div className="flex gap-5 max-lg:hidden">
                 <FaChevronLeft
                   onMouseEnter={() => setLeftHover(true)}
                   onMouseLeave={() => setLeftHover(false)}
@@ -144,36 +179,6 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
           </div>
         )}
       </div>
-      {(project.github || project.link) && (
-        <div className="flex gap-3 justify-end absolute top-0 right-0">
-          {project.github && (
-            <a
-              target="_blank"
-              href={project.github}
-              onMouseEnter={() => setGitHover(true)}
-              onMouseLeave={() => setGitHover(false)}
-              style={{ color: gitHover ? theme?.secondary : theme?.accent }}
-              className="transition-all"
-            >
-              <FaCode size={25} />
-            </a>
-          )}
-          {project.link && (
-            <a
-              target="_blank"
-              href={project.link}
-              onMouseEnter={() => setLinkHover(true)}
-              onMouseLeave={() => setLinkHover(false)}
-              style={{
-                color: linkHover ? theme?.secondary : theme?.accent,
-              }}
-              className="transition-all"
-            >
-              <IoMdOpen size={25} />
-            </a>
-          )}
-        </div>
-      )}
     </motion.div>
   );
 };
@@ -181,7 +186,7 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
 interface ProjectButtonProps {
   project: Project;
   selectedProjectIdx: number;
-  setSelectedProject: (project: Project) => void;
+  setSelectedProject?: (project: Project) => void;
 }
 
 const ProjectListItem: React.FC<ProjectButtonProps> = ({
@@ -189,15 +194,17 @@ const ProjectListItem: React.FC<ProjectButtonProps> = ({
   selectedProjectIdx,
   setSelectedProject,
 }) => {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
   const [onHover, setHover] = useState(false);
 
   return (
     <li
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="relative my-2 rounded-sm"
-      onClick={() => setSelectedProject(project)}
+      className="relative lg:my-2 rounded-sm flex justify-center"
+      onClick={() => {
+        if (setSelectedProject) setSelectedProject(project);
+      }}
       style={{
         border:
           onHover || project.idx == selectedProjectIdx
@@ -214,8 +221,9 @@ const ProjectListItem: React.FC<ProjectButtonProps> = ({
             project.idx == selectedProjectIdx
               ? theme?.primary
               : theme?.secondary,
+          cursor: project.idx == selectedProjectIdx ? "default" : "pointer",
         }}
-        className="p-2 w-full text-left 2xl:text-xl xl:text-lg lg:text-base"
+        className="p-2 w-full text-left max-lg:text-center 2xl:text-xl xl:text-lg lg:text-base"
       >
         {project.name}
       </button>
@@ -225,55 +233,62 @@ const ProjectListItem: React.FC<ProjectButtonProps> = ({
 };
 
 export const Work: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
 
   const [selectedProject, setSelectedProject] = useState(projects[0]);
+  const [listOpen, setListOpen] = useState(false);
   const ulRef = useRef<HTMLUListElement | null>(null);
 
-  const [lastProjectIndex, setLastProjectIndex] = useState(0);
-  const exitDirection = selectedProject.idx < lastProjectIndex ? 1 : -1;
-
-  const [sectionHover, setSectionHover] = useState(false);
+  const { width } = useScreenSize();
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full max-lg:pb-10">
       <div
-        onMouseEnter={() => setSectionHover(true)}
-        onMouseLeave={() => setSectionHover(false)}
-        className="transition-all justify-start items-center 2xl:w-[75%] 2xl:h-[75%] xl:w-[90%] xl-[90%] m-auto p-10 rounded-md"
+        className="transition-all flex lg:items-center max-lg:flex-col h-full 2xl:m-20 lg:m-10 m-auto p-36 rounded-md"
         style={{
           color: theme?.accent,
-          display: "flex",
-          flexDirection: "row",
-          border: `solid 1px ${theme?.secondary}`,
-          boxShadow: sectionHover ? `0px 0px 10px ${theme?.secondary}` : "",
         }}
       >
         <ul
-          className="text-xl mr-20 pr-5 h-full"
+          className="text-xl h-fit justify-center max-lg:mb-10 pr-5 flex flex-col"
           style={{
-            borderRight: `solid 2px ${theme?.secondary}`,
+            transition: "height 0.2s linear 0s",
           }}
           ref={ulRef}
         >
-          {projects.map((project) => (
+          {width && width <= 1024 && !listOpen ? (
             <ProjectListItem
-              key={project.idx}
-              project={project}
+              project={selectedProject}
               selectedProjectIdx={selectedProject.idx}
-              setSelectedProject={(project) => {
-                setLastProjectIndex(selectedProject.idx);
-                setSelectedProject(project);
-              }}
             />
-          ))}
+          ) : (
+            <>
+              {projects.map((project) => (
+                <ProjectListItem
+                  key={project.idx}
+                  project={project}
+                  selectedProjectIdx={selectedProject.idx}
+                  setSelectedProject={(project) => {
+                    setSelectedProject(project);
+                    if (listOpen) setListOpen(false);
+                  }}
+                />
+              ))}
+            </>
+          )}
+          <li
+            onClick={() => setListOpen(!listOpen)}
+            className="w-full flex justify-center mt-5 cursor-pointer lg:hidden"
+          >
+            {listOpen ? (
+              <FaChevronUp color={theme?.secondary} />
+            ) : (
+              <FaChevronDown color={theme?.secondary} />
+            )}
+          </li>
         </ul>
         <AnimatePresence mode="wait">
-          <ProjectInfo
-            key={selectedProject.idx}
-            project={selectedProject}
-            exitDirection={exitDirection}
-          />
+          <ProjectInfo key={selectedProject.idx} project={selectedProject} />
         </AnimatePresence>
       </div>
     </div>

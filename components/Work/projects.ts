@@ -1,5 +1,3 @@
-import { logos } from "@/utils";
-
 export interface Project {
   idx: number;
   name: string;
@@ -10,6 +8,31 @@ export interface Project {
   logos: string[];
 }
 
+const logos = {
+  apache: "/logos/apache.png",
+  avalonia: "/logos/avalonia.ico",
+  azure: "/logos/azure.png",
+  blazor: "/logos/blazor.png",
+  csharp: "/logos/csharp.png",
+  css: "/logos/css1.png",
+  digitalocean: "/logos/digitalocean.png",
+  django: "/logos/django.png",
+  docker: "/logos/docker1.png",
+  dotnet: "/logos/dotnet.png",
+  figma: "/logos/figma.png",
+  html: "/logos/html.webp",
+  java: "/logos/java1.png",
+  js: "/logos/js.png",
+  maria: "/logos/maria.svg",
+  nginx: "/logos/nginx.png",
+  objc: "/logos/objc.png",
+  php: "/logos/php.webp",
+  postgres: "/logos/postgres.png",
+  react: "/logos/react.png",
+  sqlite: "/logos/sqlite.svg",
+  unreal: "/logos/unreal.png",
+};
+
 export const projects: Project[] = [
   {
     idx: 0,
@@ -17,7 +40,7 @@ export const projects: Project[] = [
     link: "",
     github: "",
     description:
-      "Click & Push is a company with the mission to make public spaces more accessible. I performed full-stack development in React-Native and Django for their prototype app, Atlas: a mapping app that displays community sourced accessibility information of many kinds. It supported user authentication, CRUD applications for landmarks, and early versions of a voice command system and notifications. I also managed a private git server and deployment of the backend using Digital Ocean, docker-compose, and NGINX",
+      "Click & Push is a company with the mission to make public spaces more accessible. I performed full-stack development in React-Native and Django for their prototype app, Atlas: a mapping app that displays community sourced accessibility information of many kinds. It supports OIDC user authentication, CRUD applications for landmarks, and early versions of a voice command system and notifications. I also managed a private git server and deployment of the backend using Digital Ocean, docker-compose, and NGINX",
     screenshots: ["/cnp/map.jpg", "/cnp/profile.png", "/cnp/voice.png"],
     logos: [
       logos.react,
@@ -34,7 +57,7 @@ export const projects: Project[] = [
     link: "",
     github: "",
     description:
-      "MyViva is a wellness company that is focused on improving its user's mental, physical, and nutritional fitness through science backed approaches. I performed full-stack web and mobile development in Unreal, React/React-Native, and Django for their prototype app, YARO: an AI driven wellness buddy that supports text to speech and speech to text to provide a natural feeling interface. I built the Django backend from scratch, and in the frontend unreal app I wired up API calls and wrote the native android code for speech synthesis in Java. I also managed various resources with Azure, such as a Perforce instance and the backend server (composed with docker-compose and NGINX).",
+      "MyViva is a wellness company that is focused on improving its user's mental, physical, and nutritional fitness through science backed approaches. I performed full-stack web and mobile development in Unreal, React/React-Native, and Django for their prototype app, YARO: an AI driven wellness buddy that supports text to speech and speech to text to provide a natural feeling interface. I built the Django backend from scratch, and wired up API calls and wrote the native android code for speech synthesis in Java in the frontend unreal mobile app. I also managed various resources with Azure: a Perforce instance and the backend server (composed with docker-compose and NGINX).",
     screenshots: [],
     logos: [
       logos.react,
@@ -54,7 +77,7 @@ export const projects: Project[] = [
     github: "https://github.com/cdmoss/ElixrMarket",
     link: "",
     description:
-      "Elixr market is a prototype app that I built using ASP.NET Core Razor Pages for the University of Alberta. It was meant to be a store for high quality, peer reviewed XR applications built within an academic setting. It supported early versions of peer review within the app, file uploads, group-based user authentication, a storefront, and cart.",
+      "Elixr market is a prototype app that I built using ASP.NET Core Razor Pages for the University of Alberta. It was meant to be a store for high quality, peer reviewed XR applications built within an academic setting. It contained prototype implementations of an in-app peer review process, file uploads, group-based user authentication using ASP.NET's built-in auth library, a storefront, and cart.",
     screenshots: ["/elixr/product.PNG", "/elixr/upload.PNG"],
     logos: [
       logos.dotnet,
@@ -73,7 +96,7 @@ export const projects: Project[] = [
     link: "",
     github: "https://github.com/cdmoss/TradDataMonitor-v2",
     description:
-      "TRAD Data Monitor was built for a paid student contract orchestrated in partnership with the Medicine Hat College and a local vermiculture business called TRAD Industries. My team of 3 was awarded with the contract after our final project was selected by TRAD in our systems design course. It featured a graphic UI built using Avalonia (an open source, cross-platform WPF.NET alternative), collected various sensor data from Phidget sensors, and supported custom graph creation",
+      "TRAD Data Monitor was built for a paid student contract orchestrated in partnership with the Medicine Hat College and a local vermiculture business called TRAD Industries. My team of 3 was awarded with the contract after our final project was selected by TRAD in our systems design course. It featured a graphic UI built using Avalonia (an open source, cross-platform WPF.NET alternative), collected various sensor data from Phidget sensors, and supported custom data plot creation",
     screenshots: [],
     logos: [logos.avalonia, logos.dotnet, logos.csharp, logos.sqlite],
   },
