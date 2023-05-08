@@ -42,11 +42,7 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
 
   return (
     <motion.div
-      className="h-full flex-1 flex gap-5 justify-start max-lg:flex-col relative max-lg:mb-16 lg:pl-20"
-      style={{
-        borderLeft:
-          width && width > 1024 ? `solid 2px ${theme?.secondary}` : "",
-      }}
+      className="h-full flex-1 flex gap-5 justify-start max-lg:flex-col relative max-lg:mb-16 lg:pl-12"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -243,15 +239,17 @@ export const Work: React.FC = () => {
   return (
     <div className="flex flex-col h-full max-lg:pb-10">
       <div
-        className="transition-all flex lg:items-center max-lg:flex-col h-full m-8 lg:m-20 2xl:m-52 rounded-md"
+        className="transition-all flex lg:items-center max-lg:flex-col h-full m-8 lg:p-20 2xl:p-36 rounded-md"
         style={{
           color: theme?.accent,
         }}
       >
         <ul
-          className="text-xl h-fit justify-center lg:pr-5 flex flex-col"
+          className="text-xl h-fit justify-center lg:pr-5 flex flex-col "
           style={{
             transition: "height 0.2s linear 0s",
+            borderRight:
+              width && width > 1024 ? `solid 2px ${theme?.secondary}` : "",
           }}
           ref={ulRef}
         >

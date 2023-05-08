@@ -8,6 +8,7 @@ interface Theme {
   name: ThemeName;
   primary: string;
   secondary: string;
+  tertiary: string;
   accent: string;
 }
 
@@ -23,12 +24,14 @@ const themes: Record<ThemeName, Theme> = {
     name: "dark",
     primary: "#031926",
     secondary: "#00FFAB",
+    tertiary: "#219F94",
     accent: "#EFE9F4",
   },
   light: {
     name: "light",
     primary: "#EFE9F4",
     secondary: "#219F94",
+    tertiary: "#00FFAB",
     accent: "#031926",
   },
 };

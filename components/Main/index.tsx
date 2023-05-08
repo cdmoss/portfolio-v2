@@ -2,7 +2,7 @@ import { useTheme } from "@/ThemeContext";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { CSSProperties, useRef } from "react";
+import React, { useRef } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { NavItem } from "../Nav";
 import styles from "./Main.module.css";
@@ -64,18 +64,12 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
       },
     },
     idle: {
-      color: theme?.secondary,
-      backgroundColor: theme?.primary,
+      backgroundColor: theme?.secondary,
     },
     hover: {
-      color: theme?.primary,
-      backgroundColor: theme?.secondary,
+      backgroundColor: theme?.tertiary,
       transition: { duration: 0.2 },
     },
-  };
-
-  const buttonStyles: CSSProperties = {
-    border: `solid 1px ${theme?.secondary}`,
   };
 
   const buttonClasses = "md:p-5 p-3 h-fit rounded-sm";
@@ -113,7 +107,7 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
           <motion.button
             onClick={data.action}
             key={data.text}
-            style={buttonStyles}
+            style={{ color: theme.primary }}
             variants={buttonVariants}
             initial={"hidden"}
             animate={["idle", "entering"]}

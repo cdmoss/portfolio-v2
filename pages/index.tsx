@@ -137,7 +137,7 @@ export default function Home() {
               {pages[activePage]}
             </motion.div>
           </AnimatePresence>
-          <Footer />
+          {width && width > 1024 && <Footer />}
         </div>
       </main>
     </>
