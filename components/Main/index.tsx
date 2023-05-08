@@ -134,8 +134,8 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
               animate="visible"
               className={`${styles.hexagon} flex justify-center items-center h-full max-lg:self-center`}
               style={{
-                height: pictureSize() + 25,
-                width: pictureSize() + 25,
+                height: pictureSize() + 10,
+                width: pictureSize() + 10,
                 backgroundColor: theme?.secondary,
               }}
             >
