@@ -52,7 +52,7 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
       exit={{ opacity: 0 }}
     >
       <div className="flex max-lg:flex-col gap-10 justify-even items-center lg:h-full w-full">
-        <div className="flex flex-1 flex-col max-w-[50%] m-auto">
+        <div className="flex flex-1 flex-col lg:max-w-[50%] m-auto">
           <div className="2xl:text-lg xl:text-md">{project.description}</div>
           {(project.github || project.link) && (
             <div className="flex gap-3 justify-end">
@@ -136,7 +136,6 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
                     style={{ opacity: imageRef.current && photoHover ? 1 : 0 }}
                     className="transition-opacity"
                   >
-                    {/* TODO: enable photo expansion */}
                     <IoMdOpen
                       onMouseEnter={() => setPhotoHover(true)}
                       onMouseLeave={() => setPhotoHover(false)}
@@ -244,13 +243,13 @@ export const Work: React.FC = () => {
   return (
     <div className="flex flex-col h-full max-lg:pb-10">
       <div
-        className="transition-all flex lg:items-center max-lg:flex-col h-full 2xl:m-20 lg:m-10 m-auto p-36 rounded-md"
+        className="transition-all flex lg:items-center max-lg:flex-col h-full m-8 lg:m-20 2xl:m-52 rounded-md"
         style={{
           color: theme?.accent,
         }}
       >
         <ul
-          className="text-xl h-fit justify-center max-lg:mb-10 pr-5 flex flex-col"
+          className="text-xl h-fit justify-center lg:pr-5 flex flex-col"
           style={{
             transition: "height 0.2s linear 0s",
           }}

@@ -6,8 +6,11 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      style={{ border: `solid 1px ${theme.secondary}` }}
-      className=" border-t h-[10%] flex flex-col justify-center items-center"
+      style={{
+        borderTop: `solid 1px ${theme.secondary}`,
+        backgroundColor: theme.primary,
+      }}
+      className="h-[10%] flex flex-col justify-center items-center z-10 absolute left-0 right-0 bottom-0"
     >
       <p style={{ color: theme.accent }} className=" mb-2">
         © {new Date().getFullYear()} Chase Mossing

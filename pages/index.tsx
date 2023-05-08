@@ -14,6 +14,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 const ANIM_DELAY = 0.25;
 
+// TODO: solve slow image loading
+
 export default function Home() {
   const { theme } = useTheme();
 
@@ -104,7 +106,7 @@ export default function Home() {
         <title>Chase Mossing</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* TODO: change icon */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/cm.ico" />
       </Head>
       <main
         onTouchStart={(e) => setTouchStart(e.touches.item(0).screenX)}
