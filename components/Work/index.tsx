@@ -277,7 +277,7 @@ export const Work: React.FC = () => {
           )}
           <li
             onClick={() => setListOpen(!listOpen)}
-            className="w-full flex justify-center mt-5 cursor-pointer lg:hidden"
+            className="w-full flex justify-center mt-2 mb-4 cursor-pointer lg:hidden"
           >
             {listOpen ? (
               <FaChevronUp color={theme?.secondary} />
