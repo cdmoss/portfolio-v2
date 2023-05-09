@@ -168,7 +168,12 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
                   "I'm a driven full-stack developer looking for opportunities to grow my skillset and build excellent software."
                 }
               </p>
-              {<hr className="my-5" />}
+              {
+                <div
+                  className="my-5 h-[2px] w-full"
+                  style={{ backgroundColor: theme.secondary }}
+                ></div>
+              }
 
               <p
                 className="lg:text-xl mb-2"
