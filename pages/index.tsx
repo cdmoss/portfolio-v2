@@ -1,6 +1,5 @@
 import { useTheme } from "@/ThemeContext";
 import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer/Footer";
 import Main from "@/components/Main";
 import Nav, { NAV_ITEMS, NavItem, pageIndex } from "@/components/Nav";
 import { Work } from "@/components/Work";
@@ -88,7 +87,7 @@ export default function Home() {
     }
 
     if (width! >= 1029 && e?.deltaY) {
-      if (e!.deltaY > 50) {
+      if (Math.abs(e!.deltaY) > 50) {
         setScrollOnCooldown(true);
         if (e!.deltaY < 0 && activePage !== "work") {
           setActivePage(NAV_ITEMS[pageIndex(activePage) - 1]);
@@ -137,7 +136,7 @@ export default function Home() {
               {pages[activePage]}
             </motion.div>
           </AnimatePresence>
-          {width && width > 1024 && <Footer />}
+          {/* {width && width > 1024 && <Footer />} */}
         </div>
       </main>
     </>
