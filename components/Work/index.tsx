@@ -80,7 +80,10 @@ const ProjectInfo: React.FC<ProjectInfoProps> = ({ project }) => {
               )}
             </div>
           )}
-          <hr className="py-3 mt-5" />
+          <div
+            className="h-[1px] w-full my-3 mt-5"
+            style={{ backgroundColor: theme.accent }}
+          ></div>
           {project.logos.length > 0 && (
             <div className="flex lg:flex-1 gap-3 flex-wrap justify-center">
               {project.logos.map((logo) => (

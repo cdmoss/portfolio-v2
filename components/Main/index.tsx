@@ -155,7 +155,7 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
             <div className="flex h-full flex-col">
               <div
                 style={{ color: theme?.secondary }}
-                className="2xl:text-5xl lg:text-4xl md:text-3xl max-md:text-2xl xl:pb-12 max-lg:text-center"
+                className="lg:text-4xl md:text-3xl max-md:text-2xl xl:pb-12 max-lg:text-center"
               >
                 <span style={{ color: theme?.accent }}>{"Hi, I'm "}</span>
                 <span style={{ color: theme?.secondary }}>
@@ -163,10 +163,7 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
                 </span>
               </div>
               {width && width <= 1024 && renderButtons()}
-              <p
-                className="2xl:text-2xl lg:text-lg mb-3"
-                style={{ color: theme?.accent }}
-              >
+              <p className="lg:text-lg mb-3" style={{ color: theme?.accent }}>
                 {
                   "I'm a driven full-stack developer looking for opportunities to grow my skillset and build excellent software."
                 }
@@ -174,7 +171,7 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
               {<hr className="my-5" />}
 
               <p
-                className="2xl:text-3xl lg:text-xl mb-2"
+                className="lg:text-xl mb-2"
                 style={{ color: theme?.secondary }}
               >
                 {"Highlights:"}
@@ -195,7 +192,7 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
                       className="mr-5 mt-2"
                     />
                     <p
-                      className="flex-1 2xl:text-2xl lg:text-lg"
+                      className="flex-1 lg:text-lg"
                       style={{ color: theme?.accent }}
                     >
                       {point}

@@ -29,9 +29,9 @@ const themes: Record<ThemeName, Theme> = {
   },
   light: {
     name: "light",
-    primary: "#EFE9F4",
-    secondary: "#219F94",
-    tertiary: "#00FFAB",
+    primary: "white",
+    secondary: "#005aff",
+    tertiary: "#45B1E8",
     accent: "#031926",
   },
 };
