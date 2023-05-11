@@ -51,21 +51,12 @@ export default function Home() {
 
   const pageVariants: Record<NavItem, Variants | {}> = {
     work: {
-      initial: { x: "-100%", opacity: 0 },
+      initial: { x: "100%", opacity: 0 },
       enter: { x: "0%", opacity: 1, transition: { duration: ANIM_DELAY } },
-      exit: { x: "-100%", opacity: 0, transition: { duration: ANIM_DELAY } },
+      exit: { x: "100%", opacity: 0, transition: { duration: ANIM_DELAY } },
     },
     home: {
       initial: (custom: { prevPage: NavItem; currentPage: NavItem }) => ({
-        x:
-          NAV_ITEMS.indexOf(custom.currentPage) >
-          NAV_ITEMS.indexOf(custom.prevPage)
-            ? "100%"
-            : "-100%",
-        transition: { duration: ANIM_DELAY },
-      }),
-      enter: { x: "0%", opacity: 1, transition: { duration: ANIM_DELAY } },
-      exit: (custom: { prevPage: NavItem; currentPage: NavItem }) => ({
         x:
           NAV_ITEMS.indexOf(custom.currentPage) >
           NAV_ITEMS.indexOf(custom.prevPage)
@@ -73,11 +64,15 @@ export default function Home() {
             : "100%",
         transition: { duration: ANIM_DELAY },
       }),
-    },
-    contact: {
-      initial: { x: "100%", opacity: 0 },
       enter: { x: "0%", opacity: 1, transition: { duration: ANIM_DELAY } },
-      exit: { x: "100%", opacity: 0, transition: { duration: ANIM_DELAY } },
+      exit: (custom: { prevPage: NavItem; currentPage: NavItem }) => ({
+        x:
+          NAV_ITEMS.indexOf(custom.currentPage) >
+          NAV_ITEMS.indexOf(custom.prevPage)
+            ? "100%"
+            : "-100%",
+        transition: { duration: ANIM_DELAY },
+      }),
     },
   };
 
@@ -89,9 +84,9 @@ export default function Home() {
     if (width! >= 1029 && e?.deltaY) {
       if (Math.abs(e!.deltaY) > 50) {
         setScrollOnCooldown(true);
-        if (e!.deltaY < 0 && activePage !== "work") {
+        if (e!.deltaY < 0 && activePage !== "home") {
           setActivePage(NAV_ITEMS[pageIndex(activePage) - 1]);
-        } else if (e!.deltaY > 0 && activePage !== "contact") {
+        } else if (e!.deltaY > 0 && activePage !== "work") {
           setActivePage(NAV_ITEMS[pageIndex(activePage) + 1]);
         }
       }
@@ -108,8 +103,8 @@ export default function Home() {
         <link rel="icon" href="/cm.ico" />
       </Head>
       <main
-        onTouchStart={(e) => setTouchStart(e.touches.item(0).screenX)}
-        onTouchEnd={(e) => setTouchStart(e.touches.item(0).screenX)}
+        // onTouchStart={(e) => setTouchStart(e.touches.item(0).screenX)}
+        // onTouchEnd={(e) => setTouchStart(e.touches.item(0).screenX)}
         className="h-full transition-colors"
         onWheel={changeActivePageOnScroll}
         style={{ backgroundColor: theme?.primary }}

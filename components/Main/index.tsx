@@ -72,16 +72,12 @@ const Main: React.FC<{ setActivePage: (item: NavItem) => void }> = ({
     },
   };
 
-  const buttonClasses = "md:p-5 p-3 h-fit rounded-sm";
+  const buttonClasses = "md:p-5 p-3 w-full h-fit rounded-sm";
 
   const buttonData = [
     {
       text: "see my work",
       action: () => setActivePage("work"),
-    },
-    {
-      text: "get in touch",
-      action: () => setActivePage("contact"),
     },
   ];
 
