@@ -159,7 +159,7 @@ const Nav: React.FC<NavProps> = ({
               }}
             ></li>
             <li className="md:mx-8 mx-2 mb-2">
-              <details className="dropdown">
+              <details className="dropdown dropdown-hover">
                 <summary
                   style={{
                     color: theme?.accent,

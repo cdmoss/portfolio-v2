@@ -106,7 +106,7 @@ export const projects: Project[] = [
     link: "",
     github: "https://github.com/cdmoss/hrmanager-blazorapp",
     description:
-      "HR Manager was a Blazor and Razor web app built the local food bank in my hometown of Medicine Hat as a volunteer project. It supports user authentication, volunteer signup and information management, and shift scheduling.",
+      "HR Manager was a Blazor and Razor web app built for the local food bank in my hometown of Medicine Hat as a volunteer project. It supports user authentication, volunteer signup and information management, and shift scheduling.",
     screenshots: [
       "/foodbank/calendar.PNG",
       "/foodbank/login.PNG",
@@ -134,7 +134,7 @@ export const projects: Project[] = [
     link: "https://www.figma.com/proto/glTvMyovhqOCohLZM0mZW8/3520AssignmentOne?scaling=scale-down&page-id=0%3A1&node-id=1-23&starting-point-node-id=1%3A5",
     github: "",
     description:
-      "My minimalist website design is a Figma design that describes and demonstrates common elements of minimalist design. It was created for my university web design class.",
+      "My minimalist website design is a Figma design that describes and demonstrates common elements of minimalist design. It was created for my university web design class (The on-hover animations will not work on mobile devices).",
     screenshots: ["/minimalism.png"],
     logos: [logos.figma],
   },
@@ -161,7 +161,7 @@ export const projects: Project[] = [
     link: "https://basic-logic-sim.netlify.app",
     github: "https://github.com/cdmoss/logic-simulator-js",
     description:
-      "Logic Gate Simulator is a fun little project I built for my university web design course. It simulates a handful of 1 and 2 input simple logic gates.",
+      "Logic Gate Simulator is a fun little project I built for my university web design course. It simulates a handful of 1 and 2 input simple logic gates (not mobile friendly).",
     screenshots: ["/logicsim/not.png", "/logicsim/or.png"],
     logos: [logos.html, logos.css, logos.js],
   },
